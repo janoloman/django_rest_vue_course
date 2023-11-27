@@ -17,7 +17,7 @@ def product_detail(request, pk):
                     "photo": product.photo.url,
                     "price": product.price,
                     "shipping_cost": product.shipping_cost,
-                    "quantity": product.quantity,                   
+                    "quantity": product.quantity,
                 }}
         response = JsonResponse(data)
     except Product.DoesNotExist:
@@ -43,7 +43,7 @@ def manufacturer_detail(request, pk):
                     "name": manufacturer.name,
                     "location": manufacturer.location,
                     "active": manufacturer.active,
-                    "products": list(manufacturer_products.values())    
+                    "products": list(manufacturer_products.values())
                 }}
         response = JsonResponse(data)
     except Manufacturer.DoesNotExist:
@@ -56,14 +56,14 @@ def manufacturer_detail(request, pk):
     return response
 
 
-# from django.views.generic.detail import DetailView
-# from django.views.generic.list import ListView
+from django.views.generic.detail import DetailView
+from django.views.generic.list import ListView
 
-# class ProductDetailView(DetailView):
-#     model = Product
-#     template_name = "products/product_detail.html"
+class ProductDetailView(DetailView):
+    model = Product
+    template_name = "products/product_detail.html"
 
 
-# class ProductListView(ListView):
-#     model = Product
-#     template_name = "products/product_list.html"
+class ProductListView(ListView):
+    model = Product
+    template_name = "products/product_list.html"
