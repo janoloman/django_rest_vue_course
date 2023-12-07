@@ -8,7 +8,7 @@
             "name": "Python: Django",
             "type": "python",
             "request": "launch",
-            "program": "${workspaceFolder}/03-DRF-1/job_board/manage.py",
+            "program": "${workspaceFolder}/04-DRF-2/ebooksapi/manage.py",
             "args": [
                 "runserver"
             ],
