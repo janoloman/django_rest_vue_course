@@ -2,7 +2,7 @@ import requests
 
 def client():
   data = {
-    "username": "resttest",
+    "username": "resttest2",
     "email": "test@rest.com",
     "password1": "changeme123",
     "password2": "changeme123"

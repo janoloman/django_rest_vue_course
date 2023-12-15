@@ -46,9 +46,10 @@ INSTALLED_APPS = [
     'allauth.account',
     'allauth.socialaccount',
 
+    # 'rest_auth',
+    # 'rest_auth.registration',
     'dj_rest_auth',
     'dj_rest_auth.registration',
-    # 'rest_auth',
 
     'profiles'
 ]
@@ -149,5 +150,5 @@ REST_FRAMEWORK = {
 
 SITE_ID = 1
 
-ACOOUNT_EMAIL_VERIFICATION = "none"
+ACCOUNT_EMAIL_VERIFICATION = "none"
 ACCOUNT_EMAIL_REQUIRED = (True)
