@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset='utf-8'>
+  <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+  <title>Conditional rendering</title>
+  <meta name='viewport' content='width=device-width, initial-scale=1'>
+  <!-- <link rel='stylesheet' type='text/css' media='screen' href='main.css'> -->
+</head>
+
+<body>
+  <div id="app">
+    <!-- <h1 v-if="auth">Your user profile</h1>
+    <h1 v-else="auth">Please login to access your profile!</h1> -->
+
+    <h1>Product: {{product}}</h1>
+    <h2 v-if="quantity >= 20">Available</h2>
+    <h2 v-else-if="quantity > 0 && quantity < 20">Limited Availability</h2>
+    <h2 v-else>Sold out!</h2>
+    <br>
+    <h3 v-show="sale">On Sale!!!</h3>
+
+  </div>
+
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <script src='main.js'></script>
+</body>
+</html>
