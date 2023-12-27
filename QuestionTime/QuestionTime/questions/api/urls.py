@@ -27,4 +27,9 @@ urlpatterns = [
     name="answer-detail",
   ),
 
+  path(
+    "answers/<uuid:uuid>/like/",
+    qv.AnswerLikeAPIView.as_view(),
+    name="answer-like",
+  ),
 ]

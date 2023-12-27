@@ -28,3 +28,4 @@ Content-Type: application/json
 ### Logout
 POST {{host}}/auth/token/logout/
 Authorization: token {{token}}
+
