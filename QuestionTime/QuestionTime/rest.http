@@ -2,7 +2,7 @@
 @username=new_user
 @email=new@user.com
 @password=new_user_password
-@token=dc371b5668fffc7aff409f21520f8bd247a6f7f1
+@token=d1a695a373d2333f8c1054e310c135f1b1afa531
 
 ### Create new account
 POST {{host}}/auth/users/
