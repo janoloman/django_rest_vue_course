@@ -20,7 +20,7 @@ class Question(TimeStampedModel):
 class Answer(TimeStampedModel):
   uuid = models.UUIDField(db_index=True, default=uuid_lib.uuid4, editable=False)
   body = models.TextField()
-  questions = models.ForeignKey(
+  question = models.ForeignKey(
     Question, on_delete=models.CASCADE, related_name="answers"
   )
   author = models.ForeignKey(
