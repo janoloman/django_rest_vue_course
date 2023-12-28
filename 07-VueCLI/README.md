@@ -29,6 +29,19 @@ npm install -g @vue/cli
 ## create a Vue CLI project
 ``` sh
 vue create hello-vue
+
+# Manually select features
+#   - Features:
+#     + Babel
+#     + Router
+#     + Linter
+#   - Vue.js version 3.x
+#   - history mode for Router: Yes
+#   - ESLint with error prevention only
+#   - Lint on save
+#   - In dedicated config files
+#   - Save this as a preset for future projects: Yes
+
 ```
 
 ## run server
