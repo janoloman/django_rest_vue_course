@@ -7,7 +7,32 @@
         <span class="author-name">{{ question.author }}</span>
       </p>
       <p>{{ question.created_at }}</p>
-      <hr>
+
+      <div v-if="userHasAnswered">
+        <p class="answer-added">You've written an answer!</p>
+      </div>
+      <div v-else-if="showForm">
+        <form @submit.prevent="onSubmit">
+          <p>Answer the question</p>
+          <textarea
+            v-model="newAnswerBody"
+            class="form-control"
+            placeholder="Share your knowledge!"
+            rows="10"
+          ></textarea>
+          <button type="submit" class="btn btn-success my-3">
+            Submit your answer
+          </button>
+        </form>
+        <p v-if="error" class="error mt-2">{{ error }}</p>
+      </div>
+      <div v-else>
+        <button class="btn btn-success" @click="showForm = true">
+          Answer the question
+        </button>
+      </div>
+
+      <hr />
     </div>
     <div v-else>
       <h1 class="error text-center">404 - Question not found</h1>
@@ -37,16 +62,16 @@
 <script>
 import { axios } from "@/common/api.service.js";
 import AnswerComponent from "@/components/Answer.vue";
-export default{
+export default {
   name: "QuestionView",
   props: {
     slug: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
   components: {
-    AnswerComponent
+    AnswerComponent,
   },
   data() {
     return {
@@ -54,6 +79,10 @@ export default{
       answers: [],
       next: null,
       loadingAnswers: false,
+      userHasAnswered: false,
+      showForm: false,
+      newAnswerBody: null,
+      error: null,
     };
   },
   methods: {
@@ -64,7 +93,8 @@ export default{
       let endpoint = `/api/v1/questions/${this.slug}/`;
       try {
         const response = await axios.get(endpoint);
-        this.question= response.data;
+        this.question = response.data;
+        this.userHasAnswered = response.data.user_has_answered;
         this.setPageTitle(response.data.content);
       } catch (error) {
         console.log(error.response);
@@ -93,12 +123,34 @@ export default{
         alert(error.response.statusText);
       }
     },
+    async onSubmit() {
+      if (!this.newAnswerBody) {
+        this.error = "You can't send and empty answer!";
+        return;
+      }
+      const endpoint = `/api/v1/questions/${this.slug}/answer/`;
+      try {
+        const response = await axios.post(endpoint, {
+          body: this.newAnswerBody,
+        });
+        this.answers.unshift(response.data);
+        this.newAnswerBody = null;
+        this.showForm = false;
+        this.userHasAnswered = true;
+        if(this.error){
+          this.error = null;
+        }
+      } catch (error) {
+        console.log(error.response);
+        alert(error.response.statusText);
+      }
+    },
   },
   created() {
     this.getQuestionData();
     this.getQuestionAnswers();
-  }
-}
+  },
+};
 </script>
 
 <style>
@@ -108,5 +160,9 @@ export default{
 }
 .error {
   color: #dc3545;
+}
+.answer-added {
+  font-weight: bold;
+  color: green;
 }
 </style>
