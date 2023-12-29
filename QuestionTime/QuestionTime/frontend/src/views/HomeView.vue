@@ -9,11 +9,20 @@
               <span class="question-author">{{ question.author }}</span>
             </p>
             <h2>{{ question.content }}</h2>
-            <p class="mb-0">
-              Answers: {{ question.answers_count }}
-            </p>
+            <p class="mb-0">Answers: {{ question.answers_count }}</p>
           </div>
         </div>
+      </div>
+
+      <div class="my-4">
+        <p v-show="loadingQuestion">...loading...</p>
+        <button
+          v-show="next"
+          @click="getQuestions"
+          class="btn btn-sm btn-outline-success"
+        >
+          Load more
+        </button>
       </div>
     </div>
   </div>
@@ -22,35 +31,45 @@
 <script>
 import { axios } from "@/common/api.service.js";
 export default {
-  name: 'HomeView',
+  name: "HomeView",
   data() {
     return {
-      questions : []
-    }
+      questions: [],
+      next: null,
+      loadingQuestion: false
+    };
   },
   methods: {
     async getQuestions() {
       let endpoint = "/api/v1/questions/";
+      if (this.next) {
+        endpoint = this.next;
+      }
+      this.loadingQuestion = true;
       try {
         const response = await axios.get(endpoint);
-        console.log(response);
-        this.questions = response.data
-        console.log(this.questions);
+        this.questions.push(...response.data.results);
+        this.loadingQuestion = false;
+        if(response.data.next) {
+          this.next = response.data.next;
+        } else {
+          this.next = null;
+        }
       } catch (error) {
         console.log(error.response);
         alert(error.response.statusText);
       }
-    }
+    },
   },
   created() {
     this.getQuestions();
-  }
-}
+  },
+};
 </script>
 
 <style>
-.question-author  {
+.question-author {
   font-weight: bold;
-  color: #dc3545
+  color: #dc3545;
 }
 </style>

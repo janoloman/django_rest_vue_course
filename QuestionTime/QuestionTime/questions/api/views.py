@@ -19,6 +19,11 @@ class QuestionViewSet(viewsets.ModelViewSet):
   def perform_create(self, serializer):
     serializer.save(author=self.request.user)
 
+  # def get_queryset(self):
+  # '''Simulate a slow connection'''
+  #   import time
+  #   time.sleep(3)
+  #   return super().get_queryset()
 
 class AnswerCreateAPIView(generics.CreateAPIView):
   queryset = Answer.objects.all()
