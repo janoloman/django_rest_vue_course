@@ -1,7 +1,7 @@
 <template>
   <div class="home mt-3">
     <div class="container">
-      <div v-for="question in questions" :key="question.pk">
+      <div v-for="question in questions" :key="question.uuid">
         <div class="card shadow p-2 mb-4 bg-body rounded">
           <div class="card-body">
             <p class="mb-0">
@@ -33,6 +33,7 @@ export default {
       let endpoint = "/api/v1/questions/";
       try {
         const response = await axios.get(endpoint);
+        console.log(response);
         this.questions = response.data
         console.log(this.questions);
       } catch (error) {
