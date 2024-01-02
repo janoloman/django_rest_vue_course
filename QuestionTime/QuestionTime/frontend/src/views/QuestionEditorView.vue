@@ -18,6 +18,12 @@
 import { axios } from "@/common/api.service.js";
 export default {
   name: "QuestionEditorView",
+  props: {
+    slug: {
+      type: String,
+      required: false
+    }
+  },
   data() {
     return {
       questionBody: null,
@@ -29,6 +35,10 @@ export default {
       // Tell the REST API to create or update a Question instance;
       let endpoint = "/api/v1/questions/";
       let method = "POST";
+      if(this.slug !== undefined && this.slug !== ""){
+        endpoint += `${this.slug}/`;
+        method = "PUT";
+      }
       try {
         const response = await axios({
           method: method,
@@ -55,5 +65,21 @@ export default {
       }
     },
   },
+  created() {
+    document.title = "Editor - QuestionTime";
+  },
+  async beforeRouteEnter(to, from, next) {
+    if(to.params.slug !== undefined && to.params.slug !== ""){
+      const endpoint = `/api/v1/questions/${to.params.slug}/`;
+      try {
+        const response = await axios.get(endpoint);
+        return next(vm => vm.questionBody = response.data.content);
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      return next();
+    }
+  }
 };
 </script>
