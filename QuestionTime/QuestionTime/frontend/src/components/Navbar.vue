@@ -4,7 +4,7 @@
       <router-link class="navbar-brand" :to="{ name: 'home' }">
         QuestionTime
       </router-link>
-    <button
+      <button
         class="navbar-toggler"
         type="button"
         data-bs-toggle="collapse"
@@ -18,7 +18,10 @@
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ms-auto">
           <li class="nav-item">
-            <router-link class="btn btn-danger" :to="{ name: 'question-editor' }">
+            <router-link
+              class="btn btn-danger"
+              :to="{ name: 'question-editor' }"
+            >
               Ask Question
             </router-link>
           </li>

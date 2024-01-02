@@ -43,11 +43,11 @@
     <div v-if="question">
       <AnswerComponent
         v-for="answer in answers"
-        :key="answer.uuid"
         :answer="answer"
+        :requestUser="requestUser"
+        :key="answer.uuid"
       />
     </div>
-
     <div class="my-4">
       <p v-show="loadingAnswers">...loading...</p>
       <button
