@@ -43,9 +43,10 @@
     <div v-if="question">
       <AnswerComponent
         v-for="answer in answers"
+        :key="answer.uuid"
         :answer="answer"
         :requestUser="requestUser"
-        :key="answer.uuid"
+        @delete-answer="deleteAnswer"
       />
     </div>
     <div class="my-4">
@@ -158,6 +159,17 @@ export default {
         alert(error.response.statusText);
       }
     },
+    async deleteAnswer(answer) {
+      const endpoint = `/api/v1/answers/${answer.uuid}/`;
+      try {
+        await axios.delete(endpoint);
+        this.answers.splice(this.answers.indexOf(answer), 1);
+        this.userHasAnswered = false;
+      } catch (error) {
+        console.log(error.response);
+        alert(error.response.statusText);
+      }
+    }
   },
   created() {
     this.getQuestionData();
